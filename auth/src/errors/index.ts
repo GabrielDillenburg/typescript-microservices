@@ -1,2 +1,2 @@
-export * from './database-connection-error'
-export * from './request-validation-error'
+export * from './errors/database-connection-error'
+export * from './errors/request-validation-error'

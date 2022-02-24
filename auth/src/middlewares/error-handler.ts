@@ -1,18 +1,13 @@
 import { NextFunction, Request, Response } from 'express'
-import { RequestValidationError, DatabaseConnectionError } from '../errors/index'
+import { CustomError } from '../errors/protocols/custom-error'
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const errorHandler = (
-  err: Error, req: Request, res: Response, next: NextFunction) => {
-  if (err instanceof RequestValidationError) {
-    console.log('handling this error as a request validation error')
-  }
-
-  if (err instanceof DatabaseConnectionError) {
-    console.log('handling this error as a database connection error')
+  err: Error, req: Request, res: Response, next: NextFunction): any => {
+  if (err instanceof CustomError) {
+    return res.status(err.statusCode).send({ errors: err.serializeErrors() })
   }
 
   res.status(400).send({
-    message: err.message
+    errors: [{ message: 'something went wrong' }]
   })
 }
