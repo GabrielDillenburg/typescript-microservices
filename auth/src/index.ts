@@ -1,4 +1,5 @@
 import express from 'express'
+import 'express-async-errors'
 import { json } from 'body-parser'
 import { currentuserRouter, signoutRouter, signinRouter, signupRouter } from './routes/index'
 import { errorHandler } from './middlewares/error-handler'
