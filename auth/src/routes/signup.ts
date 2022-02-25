@@ -38,10 +38,9 @@ router.post('/api/users/signup', [
   }, 'asdf')
 
   // Store it on session object
-  // req.session = {
-  //   jwt: userJwt
-  // }
-  req.session.jwt = userJwt
+  req.session = {
+    jwt: userJwt
+  }
   console.log(req.session)
 
   res.status(201).send(user)

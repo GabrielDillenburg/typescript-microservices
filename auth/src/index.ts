@@ -15,10 +15,12 @@ app.use(signupRouter)
 app.use(signinRouter)
 app.use(signoutRouter)
 app.use(errorHandler)
-app.use(cookieSession({
-  signed: false,
-  secure: true
-}))
+app.use(
+  cookieSession({
+    signed: false,
+    secure: true
+  })
+)
 
 const start = async (): Promise<void> => {
   try {
