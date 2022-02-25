@@ -20,18 +20,13 @@ router.post('/api/users/signin', [
 validateRequest,
 async (req: Request, res: Response) => {
   const { email, password } = req.body
-  console.log('1', password)
   const existingUser = await User.findOne({ email })
-  console.log('2', existingUser)
 
   if (!existingUser) {
     throw new BadRequestError('Invalid credentials')
   }
 
   const passwordMatch = await Password.compare(existingUser.password, password)
-  console.log('3', passwordMatch)
-  console.log('4', existingUser.password)
-  console.log('5', password)
 
   if (!passwordMatch) {
     throw new BadRequestError('Invalid credentials')
