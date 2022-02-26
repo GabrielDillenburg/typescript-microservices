@@ -1,8 +1,8 @@
 import request from 'supertest'
 import { app } from '../../app'
+process.env.JWT_KEY = 'any_key'
 
 it('returns a 201 on successful signup', async () => {
-  process.env.JWT_KEY = 'any_key'
   return request(app)
     .post('/api/users/signup')
     .send({
@@ -13,7 +13,6 @@ it('returns a 201 on successful signup', async () => {
 })
 
 it('returns a 400 with an invalid email', async () => {
-  process.env.JWT_KEY = 'any_key'
   return request(app)
     .post('/api/users/signup')
     .send({
@@ -24,12 +23,27 @@ it('returns a 400 with an invalid email', async () => {
 })
 
 it('returns a 400 with an invalid password', async () => {
-  process.env.JWT_KEY = 'any_key'
   return request(app)
     .post('/api/users/signup')
     .send({
       email: 'test@example.com',
       password: 'pas'
+    })
+    .expect(400)
+})
+
+it('returns a 400 with missing email and password', async () => {
+  await request(app)
+    .post('/api/users/signup')
+    .send({
+      password: 'any_password'
+    })
+    .expect(400)
+
+  await request(app)
+    .post('/api/users/signup')
+    .send({
+      email: 'test@example.com'
     })
     .expect(400)
 })
