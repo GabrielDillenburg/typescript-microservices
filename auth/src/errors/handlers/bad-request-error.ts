@@ -1,7 +1,7 @@
 import { CustomError } from '../protocols/custom-error'
 
 export class BadRequestError extends CustomError {
-  statusCode = 502
+  statusCode = 400
 
   constructor (public message: string) {
     super(message)
