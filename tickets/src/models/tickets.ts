@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 import mongoose from 'mongoose'
 
 interface TicketAttrs {
@@ -29,17 +30,16 @@ const ticketSchema = new mongoose.Schema({
     type: String,
     required: true
   }
-}
-  ,
+},
   {
     toJSON: {
-      transform(doc, ret) {
-        ret.id = ret._id
-        delete ret._id
-        // delete ret.__v
-      }
+    transform(_, ret) {
+      ret.id = ret._id
+      delete ret._id
     }
-  })
+  }
+  }
+)
 
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
   return new Ticket(attrs)
