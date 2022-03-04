@@ -2,9 +2,8 @@ import express from 'express'
 import 'express-async-errors'
 import { json } from 'body-parser'
 import { currentuserRouter, signoutRouter, signinRouter, signupRouter } from './routes/index'
-import { errorHandler } from './middlewares/error-handler'
+import { errorHandler, NotFoundError } from '@gdmtech/common'
 import cookieSession from 'cookie-session'
-import { NotFoundError } from './errors/handlers/not-found-error'
 
 const app = express()
 app.set('trust proxy', true)

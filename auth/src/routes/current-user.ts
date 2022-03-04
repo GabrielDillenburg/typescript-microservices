@@ -1,5 +1,5 @@
 import express from 'express'
-import { currentUser } from '../middlewares/current-user'
+import { currentUser } from '@gdmtech/common'
 
 const router = express.Router()
 
