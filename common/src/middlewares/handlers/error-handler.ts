@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { CustomError } from '../errors/protocols/custom-error'
+import { CustomError } from '../../errors/protocols/custom-error'
 
 export const errorHandler = (
   err: Error, req: Request, res: Response, next: NextFunction): any => {

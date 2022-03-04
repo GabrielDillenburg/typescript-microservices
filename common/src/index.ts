@@ -1,9 +1,2 @@
-interface Color {
-  red: number
-}
-
-const color: Color = {
-  red: 10
-}
-
-console.log(color)
+export * from './errors/index'
+export * from './middlewares/index'
