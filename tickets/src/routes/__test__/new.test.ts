@@ -29,11 +29,29 @@ it('returns an status other than 401 if user is singed in', async () => {
 })
 
 it('returns an error if an invelid title is provided', async () => {
+  const cookie = signin()
 
+  await request(app)
+    .post('/api/tickets')
+    .set('Cookie', cookie)
+    .send({
+      title: '',
+      price: 10
+    })
+    .expect(400)
 })
 
 it('returns an error if an invelid price is provided', async () => {
+  const cookie = signin()
 
+  await request(app)
+    .post('/api/tickets')
+    .set('Cookie', cookie)
+    .send({
+      title: 'Some Title',
+      price: -20
+    })
+    .expect(400)
 })
 
 it('creates a ticket with valid inputs', async () => {
