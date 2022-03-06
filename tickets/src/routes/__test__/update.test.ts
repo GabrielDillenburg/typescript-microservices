@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import request from 'supertest'
 import { app } from '../../app'
 import { signin } from '../../test/setup'
@@ -60,7 +61,6 @@ it('returns a 400 if the user provides an invalid title or price', async () => {
     })
 
   await request(app)
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     .put(`/api/tickets/${response.body.id}`)
     .set('Cookie', cookie)
     .send({
@@ -71,5 +71,31 @@ it('returns a 400 if the user provides an invalid title or price', async () => {
 })
 
 it('updates the ticket provided valid inputs', async () => {
+  const cookie = signin()
+  const response = await request(app)
+    .post('/api/tickets')
+    .set('Cookie', cookie)
+    .send({
+      title: 'Some title',
+      price: 300
+    })
 
+  const newTitle = 'New title'
+  const newPrice = 250
+
+  await request(app)
+    .put(`/api/tickets/${response.body.id}`)
+    .set('Cookie', cookie)
+    .send({
+      title: newTitle,
+      price: newPrice
+    })
+    .expect(200)
+
+  const ticketResponse = await request(app)
+    .get(`/api/tickets/${response.body.id}`)
+    .send()
+
+  expect(ticketResponse.body.title).toEqual(newTitle)
+  expect(ticketResponse.body.price).toEqual(newPrice)
 })
