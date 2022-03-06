@@ -4,6 +4,7 @@ import { json } from 'body-parser'
 import { errorHandler, NotFoundError, currentUser } from '@gdmtech/common'
 import cookieSession from 'cookie-session'
 import { createTicketRouter } from './routes/new'
+import { showTicketRouter } from './routes/show'
 
 const app = express()
 app.set('trust proxy', true)
@@ -17,6 +18,7 @@ app.use(
 
 app.use(currentUser)
 app.use(createTicketRouter)
+app.use(showTicketRouter)
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 app.all('*', async (_req, _res): Promise<void> => {

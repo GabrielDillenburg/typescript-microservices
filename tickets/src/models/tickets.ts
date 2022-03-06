@@ -7,7 +7,7 @@ interface TicketAttrs {
   userId: string
 }
 
-interface TicketDoc extends mongoose.Document {
+export interface TicketDoc extends mongoose.Document {
   title: string
   price: number
   userId: string
@@ -17,23 +17,25 @@ interface TicketModel extends mongoose.Model<TicketDoc> {
   build: (attrs: TicketAttrs) => TicketDoc
 }
 
-const ticketSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true
+const ticketSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true
+    },
+    price: {
+      type: Number,
+      required: true
+    },
+    userId: {
+      type: String,
+      required: true
+    }
   },
-  price: {
-    type: Number,
-    required: true
-  },
-  userId: {
-    type: String,
-    required: true
-  }
-},
   {
     toJSON: {
-    transform(_, ret) {
+      // eslint-disable-next-line @typescript-eslint/space-before-function-paren
+      transform(_, ret) {
       ret.id = ret._id
       delete ret._id
     }
