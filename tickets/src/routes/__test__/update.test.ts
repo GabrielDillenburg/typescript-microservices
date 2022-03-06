@@ -29,7 +29,6 @@ it('returns a 401 if the user is not authenticated', async () => {
 
 it('returns a 401 if the user does not own the ticket', async () => {
   const cookie = signin()
-  const id = new mongoose.Types.ObjectId().toHexString()
   const response = await request(app)
     .post('/api/tickets')
     .set('Cookie', cookie)
@@ -51,7 +50,24 @@ it('returns a 401 if the user does not own the ticket', async () => {
 })
 
 it('returns a 400 if the user provides an invalid title or price', async () => {
+  const cookie = signin()
+  const response = await request(app)
+    .post('/api/tickets')
+    .set('Cookie', cookie)
+    .send({
+      title: 'Some title',
+      price: 300
+    })
 
+  await request(app)
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    .put(`/api/tickets/${response.body.id}`)
+    .set('Cookie', cookie)
+    .send({
+      title: '',
+      price: -10
+    })
+    .expect(400)
 })
 
 it('updates the ticket provided valid inputs', async () => {
